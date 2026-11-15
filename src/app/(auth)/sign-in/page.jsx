@@ -1,22 +1,25 @@
 "use client";
 
+import { signIn, signUp } from "@/lib/auth-client";
 import {Check} from "@gravity-ui/icons";
 import {Button, Description, FieldError, Form, Input, Label, TextField} from "@heroui/react";
 
 export default function SignInPage() {
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    console.log("Form submitted with:", data);
-    // const data = {};
+    // console.log("Form submitted with:", data);
+    const { data:resData, error } = await signIn.email({
+      email: data.email,
+      password: data.password,
+       callbackURL: "/",
+  
+    });
+    console.log(resData);
+   toast:("Sign in successful!");
 
-    // // Convert FormData to plain object
-    // formData.forEach((value, key) => {
-    //   data[key] = value.toString();
-    // });
-
-    // alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
+    
   };
 
   return (
